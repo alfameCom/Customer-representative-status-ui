@@ -82,5 +82,7 @@ jobs:
       file: './dist/mac/custreprstatusui.app'
       on:
         repo: alfameCom/Customer-representative-status-ui
+      draft: true
+      skip_cleanup: true
 
     
