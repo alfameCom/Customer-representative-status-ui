@@ -1,0 +1,2 @@
+json_key_file("app/api-4854643014499023889-354020-d111bee081ce.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.alfame.crstatusui") # e.g. com.krausefx.app

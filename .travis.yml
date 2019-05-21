@@ -1,0 +1,86 @@
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Automatic tests"
+      if: branch = staging
+      language: node_js
+      node: node
+      cache:
+        directories:
+          - node_modules
+      before_install: 
+        - nvm install node
+      install: yarn
+      script:
+        - yarn prod:web
+        - yarn test
+
+    - stage: "Android"
+      name: "Android build and deployment"
+      if: branch = production
+      language: android
+      jdk: oraclejdk8
+      before_install:
+        - nvm install node
+        - openssl aes-256-cbc -K $encrypted_41b3354ef2ca_key -iv $encrypted_41b3354ef2ca_iv -in ./secrets/secrets.tar.enc -out ./secrets/secrets.tar -d
+        - cd android
+        - yes | sdkmanager "platforms:android-27"
+        - gem install fastlane --no-document --quiet
+        - cd ..
+      install: yarn
+      android:
+        components:
+          - tools
+          - platform-tools
+          - android-26
+          - extra-google-m2repository
+          - extra-google-google-play-services
+        licenses:
+          - 'android-sdk-license-.+'
+      before_cache:
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache: 
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+      script:
+        - cd ./android
+        # fastlane lane
+
+    - stage: "iOS"
+      name: "iOS build and deployment"
+      if: branch = production
+      os: osx
+      osx_image: xcode10.2
+      before_install:
+        - nvm install node
+        - gem install fastlane --no-document --quiet
+        # decrypting of encrypted files
+        # setting up deployment key for code signing
+      install:
+        - yarn
+        - yarn bundle
+      script:
+        - cd ios
+        # fastlane lane
+
+    - stage: "Electron macOS build and deployment"
+      name: "Electron macOS build and deployment"
+      os: osx
+      osx_image: xcode10.2
+      before_install:
+        - nvm install node
+      install: yarn
+      script:
+        yarn prod:ele
+      deploy:
+      provider: releases
+      api_key:
+        secure: hrkMjGy4fVx4oDO8CstpwIBVPMP+gXVHrxttBgHAvr+hjrk3MG1/v20zdcaUfhKaR+TVYfQogu5QA42XHRhurbqoUHQy+9aWYBHDSkCZgSPsjOfv5mrK5tLoBf2Dz3DWsssNR93hGtku2AmUAHKGYnfFfV6O0qUX2A5bCg+IHKEH3SwaJypBoP5iqS26TDOsQ5gDx9RYrJAPUugXyMahMJF3J2XFTR/68urr9MasJbh94MYehWDH9kvQ4Q+wi/PTFqKsyz3Rg1j4Q12+EE01Twqv+rMlfW7UI2N9cboi3iczNtzsdwMqZFKoTMYugI53ELiaT3hbPbdB5EEiG+C+PIwAqLyst1ezPa2zpPsTFrflqHe6yTcAg3D3lteRoFUtjQlF+r4M0iY019q2WyYz65+AkK6UxPZKjBTl4U9APJ4wjPaQH8GbnUIC3gkA/gxV+xozkltkEGUkOjtUG+1CQv/D97qinQKj3YfwLMPFkg8Z+szCp7hA3WkiU7CEDE+pUN0Rmkbdt7xzskJ+nOWkxjTbAfdwIRZE7wp+biWBFMcRtz6+qWX0rYr3ASYbITiNBJW2immJzFB7e/21bSU03P6IaTfwm/TRObaewfGgGXo+VKqNKZdsao57QzWSbeSL8ky+deFPE1Sflyz1nCDsh0b2xZEdD88wLjxoK3EltJU=
+      file: './dist/mac/custreprstatusui.app'
+      on:
+        repo: alfameCom/Customer-representative-status-ui
+
+    
