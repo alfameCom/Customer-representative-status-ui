@@ -76,6 +76,11 @@ jobs:
       script:
         - yarn
         - yarn prod:ele
+      cache:
+        directories:
+          - "$HOME/Library/Caches/Homebrew"
+      before_cache: 
+        - brew cleanup
       deploy:
         provider: releases
         draft: true
@@ -85,5 +90,6 @@ jobs:
         file: './dist/mac/custreprstatusui.app'
         on:
           repo: alfameCom/Customer-representative-status-ui
+          tags: false
 
     
