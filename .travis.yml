@@ -70,6 +70,9 @@ jobs:
       name: "Electron macOS build and deployment"
       os: osx
       osx_image: xcode10.2
+      before_install: 
+        - nvm install node
+        - brew install yarn
       script:
         - yarn
         - yarn prod:ele
