@@ -76,7 +76,6 @@ jobs:
       script:
         - yarn
         - yarn prod:ele
-      cache: yarn
       deploy:
         provider: releases
         api_key:
