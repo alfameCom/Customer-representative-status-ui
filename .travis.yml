@@ -68,6 +68,7 @@ jobs:
 
     - stage: "Electron macOS build and deployment"
       name: "Electron macOS build and deployment"
+      if: branch = staging
       os: osx
       osx_image: xcode10.2
       before_install: 
@@ -96,5 +97,24 @@ jobs:
         on:
           repo: alfameCom/Customer-representative-status-ui
           tags: false
+
+      - stage: "Electron linux and windows build and deployment"
+      name: "Electron linux and windows build and deployment"
+      language
+      osx_image: xcode10.2
+      language: node_js
+      node: node
+      cache:
+        directories:
+          - node_modules
+      before_install: 
+        - nvm install node
+      install: yarn
+      script:
+        - yarn prod:ele
+        - cd dist
+        - ls
+        - ls linux*
+        - ls win*
 
     
