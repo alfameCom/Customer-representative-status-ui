@@ -77,8 +77,6 @@ jobs:
         - yarn
         - yarn prod:ele
       cache: yarn
-        directories:
-          - $HOME/Library/Caches/Homebrew
       deploy:
         provider: releases
         api_key:
