@@ -98,10 +98,8 @@ jobs:
           repo: alfameCom/Customer-representative-status-ui
           tags: false
 
-      - stage: "Electron linux and windows build and deployment"
+    - stage: "Electron linux and windows build and deployment"
       name: "Electron linux and windows build and deployment"
-      language
-      osx_image: xcode10.2
       language: node_js
       node: node
       cache:
