@@ -8,7 +8,7 @@
     "electron": "electron .",
     "dev:ele": "concurrently \"BROWSER=none yarn dev:web\" \"wait-on http://localhost:3000 && yarn electron\"",
     "prod:ele": "yarn prod:web && yarn dist",
-    "dist": "electron-builder",
+    "dist": "electron-builder -w",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "bundle": ""
