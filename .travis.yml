@@ -122,7 +122,7 @@ jobs:
         - os: osx
           osx_image: xcode9.4
           language: node_js
-          node_js: "node"
+          node_js: node
           env:
             - ELECTRON_CACHE=$HOME/.cache/electron
             - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
