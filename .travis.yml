@@ -125,10 +125,46 @@ jobs:
           env:
             - ELECTRON_CACHE=$HOME/.cache/electron
             - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+          before_deploy:
+            - cd dist/mac
+            - ls
+            - tar -cvf custreprstatusui.app.tar custreprstatusui.app/
+            - cd ..
+          deploy:
+            provider: releases
+            draft: true
+            skip_cleanup: true
+            api_key:
+              secure: hrkMjGy4fVx4oDO8CstpwIBVPMP+gXVHrxttBgHAvr+hjrk3MG1/v20zdcaUfhKaR+TVYfQogu5QA42XHRhurbqoUHQy+9aWYBHDSkCZgSPsjOfv5mrK5tLoBf2Dz3DWsssNR93hGtku2AmUAHKGYnfFfV6O0qUX2A5bCg+IHKEH3SwaJypBoP5iqS26TDOsQ5gDx9RYrJAPUugXyMahMJF3J2XFTR/68urr9MasJbh94MYehWDH9kvQ4Q+wi/PTFqKsyz3Rg1j4Q12+EE01Twqv+rMlfW7UI2N9cboi3iczNtzsdwMqZFKoTMYugI53ELiaT3hbPbdB5EEiG+C+PIwAqLyst1ezPa2zpPsTFrflqHe6yTcAg3D3lteRoFUtjQlF+r4M0iY019q2WyYz65+AkK6UxPZKjBTl4U9APJ4wjPaQH8GbnUIC3gkA/gxV+xozkltkEGUkOjtUG+1CQv/D97qinQKj3YfwLMPFkg8Z+szCp7hA3WkiU7CEDE+pUN0Rmkbdt7xzskJ+nOWkxjTbAfdwIRZE7wp+biWBFMcRtz6+qWX0rYr3ASYbITiNBJW2immJzFB7e/21bSU03P6IaTfwm/TRObaewfGgGXo+VKqNKZdsao57QzWSbeSL8ky+deFPE1Sflyz1nCDsh0b2xZEdD88wLjxoK3EltJU=
+            file: 
+              - './mac/custreprstatusui.app.tar'
+              - './linux-unpacked/custreprstatusui.tar'
+              - './win-unpacked/custreprstatusui.exe.tar'
+            on:
+              repo: alfameCom/Customer-representative-status-ui
+              tags: false
           
         - os: linux
           services: docker
           language: generic
+          before_deploy:
+            - cd ../linux*
+            - tar -cvf custreprstatusui.tar custreprstatusui/
+            - cd ../win*
+            - tar -cvf custreprstatusui.exe.tar custreprstatusui.exe/
+            - cd ..
+          deploy:
+            provider: releases
+            draft: true
+            skip_cleanup: true
+            api_key:
+              secure: hrkMjGy4fVx4oDO8CstpwIBVPMP+gXVHrxttBgHAvr+hjrk3MG1/v20zdcaUfhKaR+TVYfQogu5QA42XHRhurbqoUHQy+9aWYBHDSkCZgSPsjOfv5mrK5tLoBf2Dz3DWsssNR93hGtku2AmUAHKGYnfFfV6O0qUX2A5bCg+IHKEH3SwaJypBoP5iqS26TDOsQ5gDx9RYrJAPUugXyMahMJF3J2XFTR/68urr9MasJbh94MYehWDH9kvQ4Q+wi/PTFqKsyz3Rg1j4Q12+EE01Twqv+rMlfW7UI2N9cboi3iczNtzsdwMqZFKoTMYugI53ELiaT3hbPbdB5EEiG+C+PIwAqLyst1ezPa2zpPsTFrflqHe6yTcAg3D3lteRoFUtjQlF+r4M0iY019q2WyYz65+AkK6UxPZKjBTl4U9APJ4wjPaQH8GbnUIC3gkA/gxV+xozkltkEGUkOjtUG+1CQv/D97qinQKj3YfwLMPFkg8Z+szCp7hA3WkiU7CEDE+pUN0Rmkbdt7xzskJ+nOWkxjTbAfdwIRZE7wp+biWBFMcRtz6+qWX0rYr3ASYbITiNBJW2immJzFB7e/21bSU03P6IaTfwm/TRObaewfGgGXo+VKqNKZdsao57QzWSbeSL8ky+deFPE1Sflyz1nCDsh0b2xZEdD88wLjxoK3EltJU=
+            file: 
+              - './linux-unpacked/custreprstatusui.tar'
+              - './win-unpacked/custreprstatusui.exe.tar'
+            on:
+              repo: alfameCom/Customer-representative-status-ui
+              tags: false
 
         cache: 
           directories:
@@ -152,28 +188,3 @@ jobs:
           - ls dist
         before_cache:
           - rm -rf $HOME/.cache/electron-builder/wine
-
-        before_deploy: 
-        - cd dist/mac
-        - ls
-        - tar -cvf custreprstatusui.app.tar custreprstatusui.app/
-        - cd ../linux*
-        - tar -cvf custreprstatusui.tar custreprstatusui/
-        - cd ../win*
-        - tar -cvf custreprstatusui.exe.tar custreprstatusui.exe/
-        - cd ..
-
-
-        deploy:
-        provider: releases
-        draft: true
-        skip_cleanup: true
-        api_key:
-          secure: hrkMjGy4fVx4oDO8CstpwIBVPMP+gXVHrxttBgHAvr+hjrk3MG1/v20zdcaUfhKaR+TVYfQogu5QA42XHRhurbqoUHQy+9aWYBHDSkCZgSPsjOfv5mrK5tLoBf2Dz3DWsssNR93hGtku2AmUAHKGYnfFfV6O0qUX2A5bCg+IHKEH3SwaJypBoP5iqS26TDOsQ5gDx9RYrJAPUugXyMahMJF3J2XFTR/68urr9MasJbh94MYehWDH9kvQ4Q+wi/PTFqKsyz3Rg1j4Q12+EE01Twqv+rMlfW7UI2N9cboi3iczNtzsdwMqZFKoTMYugI53ELiaT3hbPbdB5EEiG+C+PIwAqLyst1ezPa2zpPsTFrflqHe6yTcAg3D3lteRoFUtjQlF+r4M0iY019q2WyYz65+AkK6UxPZKjBTl4U9APJ4wjPaQH8GbnUIC3gkA/gxV+xozkltkEGUkOjtUG+1CQv/D97qinQKj3YfwLMPFkg8Z+szCp7hA3WkiU7CEDE+pUN0Rmkbdt7xzskJ+nOWkxjTbAfdwIRZE7wp+biWBFMcRtz6+qWX0rYr3ASYbITiNBJW2immJzFB7e/21bSU03P6IaTfwm/TRObaewfGgGXo+VKqNKZdsao57QzWSbeSL8ky+deFPE1Sflyz1nCDsh0b2xZEdD88wLjxoK3EltJU=
-        file: 
-          - './mac/custreprstatusui.app.tar'
-          - './linux-unpacked/custreprstatusui.tar'
-          - './win-unpacked/custreprstatusui.exe.tar'
-        on:
-          repo: alfameCom/Customer-representative-status-ui
-          tags: false
