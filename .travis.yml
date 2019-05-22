@@ -112,14 +112,12 @@ jobs:
             -v ~/.cache/electron-builder:/root/.cache/electron-builder \
             electronuserland/builder:wine \
             /bin/bash -c "yarn dist --linux --win"
-            fi
         - ls dist
       before_deploy:
-        - cd dist/linux*
+        - cd dist
         - ls
-        - tar -cvf custreprstatusui.tar custreprstatusui/
-        - cd ../win*
-        - tar -cvf custreprstatusui.exe.tar custreprstatusui.exe/
+        - tar -cvf custreprstatusui.tar custreprstatusui*.snap/
+        - tar -cvf custreprstatusui.exe.tar custreprstatusui*.exe/
       deploy:
         provider: releases
         draft: true
