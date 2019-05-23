@@ -68,7 +68,7 @@ jobs:
 
     - stage: "Electron macOS build and deployment"
       name: "Electron macOS build and deployment"
-      if: branch = staging
+      # if: branch = staging
       os: osx
       osx_image: xcode10.2
       before_install: 
@@ -99,6 +99,7 @@ jobs:
 
     - stage: "Electron linux and windows build and deployment"
       name: "Electron linux and windows build and deployment"
+      if: branch = staging
       os: linux
       services: docker
       language: generic
