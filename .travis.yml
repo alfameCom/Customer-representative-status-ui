@@ -129,4 +129,4 @@ jobs:
           - './windows.tar'
         on:
           repo: alfameCom/Customer-representative-status-ui
-          tags: false
+          tags: true
