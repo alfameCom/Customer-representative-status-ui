@@ -20,21 +20,6 @@ platform :android do
   lane :test do
     gradle(task: "test")
   end
-
-  desc "Build APK"
-  lane :build do
-    Dir.chdir('../app')
-    pa = Dir.pwd
-    file = pa + "/" + "crstatusui.keystore"
-    gradle(
-      task: "assembleRelease",
-      properties: {
-        'android.injected.signing.store.file' => file,
-        'android.injected.signing.store.password' => "MM!ny@*IWaVDrWfh#r44",
-        'android.injected.signing.key.alias' => "crstatusui",
-        'android.injected.signing.key.password' => "MM!ny@*IWaVDrWfh#r44"
-      }
-    )
   
   end
 
