@@ -86,11 +86,11 @@ jobs:
       before_deploy: 
         - cd dist/mac
         - ls
-        - zip macOS.zip custreprstatusui.app
+        - tar -cvf macOS.tar custreprstatusui.app
         - cd ..
         - chmod +x custreprstatusui*.AppImage
-        - zip linux.zip custreprstatusui*.AppImage
-        - zip windows.zip custreprstatusui*.exe
+        - tar -cvf linux.tar custreprstatusui*.AppImage
+        - tar -cvf windows.tar custreprstatusui*.exe
       deploy:
         provider: releases
         draft: false
