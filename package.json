@@ -47,6 +47,9 @@
     "win": {
       "target": "portable"
     },
+    "linux": {
+      "target": "AppImage"
+    },
     "files": [
       "build/**/*",
       "node_modules/**/*"
