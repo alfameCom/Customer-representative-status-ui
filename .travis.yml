@@ -103,7 +103,7 @@ jobs:
           - './windows.tar'
         on:
           repo: alfameCom/Customer-representative-status-ui
-          tags: true
+          tags: false
 
     - stage: "Electron linux and windows build and deployment"
       name: "Electron linux and windows build and deployment"
