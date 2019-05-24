@@ -86,7 +86,7 @@ jobs:
       before_deploy: 
         - cd dist/mac
         - ls
-        - tar -cvf macOS.tar custreprstatusui.app/
+        - tar -cvf macOS.tar custreprstatusui.app
         - cd ..
         - chmod +x "custreprstatusui*.AppImage"
         - tar -cvf linux.tar custreprstatusui*.AppImage
