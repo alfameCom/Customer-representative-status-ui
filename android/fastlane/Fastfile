@@ -20,8 +20,6 @@ platform :android do
   lane :test do
     gradle(task: "test")
   end
-  
-  end
 
   desc "beta"
   lane :beta do
